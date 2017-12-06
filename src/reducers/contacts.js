@@ -97,6 +97,27 @@ export default (state = {contacts: [], contact: {}, toDelete: {}, isLoading: fal
         error: action.error
       };
 
+    case 'UPDATE_CONTACT_REQUEST':
+      return {
+        ...state,
+        isLoading: true
+      };
+
+    case 'UPDATE_CONTACT_SUCCESS':
+      return {
+        ...state,
+        isLoading: false,
+        contacts: state.contacts.map(contact => contact.id === action.contact.id ? action.contact : contact),
+        error: {}
+      };
+
+    case 'UPDATE_CONTACT_FAILURE':
+      return {
+        ...state,
+        isLoading: false,
+        error: action.error
+      };
+
     default:
       return state;
   }

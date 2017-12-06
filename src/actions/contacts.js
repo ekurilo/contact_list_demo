@@ -88,3 +88,17 @@ export const fetchContact = id => dispatch => {
     .then(contact => dispatch({type: 'FETCH_CONTACT_SUCCESS', contact}))
     .catch(error => dispatch({type: 'FETCH_CONTACT_FAILURE', error}))
 };
+
+export const updateContact = (id, contact) => dispatch => {
+  dispatch({type: 'UPDATE_CONTACT_REQUEST'});
+  return fetch(`${contactUrl}/${id}`, {
+    method: 'put',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(contact)
+  })
+    .then(resp => resp.json())
+    .then(contact => dispatch({type: 'UPDATE_CONTACT_SUCCESS', contact}))
+    .catch(error => dispatch({type: 'UPDATE_CONTACT_FAILURE', error}))
+}
