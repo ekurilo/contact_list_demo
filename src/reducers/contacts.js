@@ -74,6 +74,29 @@ export default (state = {contacts: [], contact: {}, toDelete: {}, isLoading: fal
         error: action.error
       };
 
+    case 'FETCH_CONTACT_REQUEST':
+      return {
+        ...state,
+        isLoading: true,
+        contact: {}
+      };
+
+    case 'FETCH_CONTACT_SUCCESS':
+      return {
+        ...state,
+        isLoading: false,
+        contact: action.contact,
+        error: {}
+      };
+
+    case 'FETCH_CONTACT_FAILURE':
+      return {
+        ...state,
+        isLoading: false,
+        contact: {},
+        error: action.error
+      };
+
     default:
       return state;
   }

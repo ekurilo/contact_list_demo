@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Field, Form, reduxForm} from 'redux-form';
 import {FlatButton, TextField} from 'material-ui';
+import {connect} from 'react-redux';
 
 
 const createTextField = ({input, label, meta: {touched, error}}) => (
@@ -47,4 +48,7 @@ class ContactForm extends Component {
   }
 }
 
-export default reduxForm({form: 'contactForm', validate})(ContactForm);
+ContactForm = reduxForm({form: 'contactForm', validate, enableReinitialize: true})(ContactForm);
+export default connect(state => ({
+  initialValues: state.contactStore.contact
+}))(ContactForm)
