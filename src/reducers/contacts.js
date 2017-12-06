@@ -1,4 +1,4 @@
-export default (state = {contacts: [], contact: {}, isLoading: false, error: {}}, action) => {
+export default (state = {contacts: [], contact: {}, toDelete: {}, isLoading: false, error: {}}, action) => {
   switch (action.type) {
     case 'FETCH_ALL_CONTACTS_REQUEST':
       return {
@@ -49,6 +49,31 @@ export default (state = {contacts: [], contact: {}, isLoading: false, error: {}}
         isLoading: false,
         error: action.error
       };
+
+    case 'DELETE_CONTACT_REQUEST':
+      return {
+        ...state,
+        toDelete: action.contact,
+        isLoading: true
+      };
+
+    case 'DELETE_CONTACT_SUCCESS':
+      return {
+        ...state,
+        isLoading: false,
+        toDelete: {},
+        contacts: state.contacts.filter(contact => contact.id !== action.contact.id),
+        error: {}
+      };
+
+    case 'DELETE_CONTACT_FAILURE':
+      return {
+        ...state,
+        isLoading: false,
+        toDelete: {},
+        error: action.error
+      };
+
     default:
       return state;
   }

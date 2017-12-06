@@ -31,6 +31,21 @@ export const newContact = () => dispatch => dispatch({
   type: 'NEW_CONTACT'
 });
 
+const deleteContactRequest = contact => ({
+  type: 'DELETE_CONTACT_REQUEST',
+  contact
+});
+
+const deleteContactSuccess = contact => ({
+  type: 'DELETE_CONTACT_SUCCESS',
+  contact
+});
+
+const deleteContactFailure = error => ({
+  type: 'DELETE_CONTACT_FAILURE',
+  error
+});
+
 const contactUrl = 'http://localhost:8090/api/contacts';
 
 export const fetchAllContacts = () => dispatch => {
@@ -53,4 +68,13 @@ export const addContact = contact => dispatch => {
     .then(resp => resp.json())
     .then(json => dispatch(addContactSuccess(json)))
     .catch(error => dispatch(addContactFailure(error)))
+};
+
+export const deleteContact = contact => dispatch => {
+  dispatch(deleteContactRequest(contact));
+  return fetch(`${contactUrl}/${contact.id}`, {
+    method: 'delete'
+  })
+    .then(resp => dispatch(deleteContactSuccess(contact)))
+    .catch(error => dispatch(deleteContactFailure(error)))
 };
